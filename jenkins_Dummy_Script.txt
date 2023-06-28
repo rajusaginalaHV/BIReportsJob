@@ -19,11 +19,13 @@ pipeline {
             ]
           )
 
-          echo "Selected value: ${userInput.SELECTED_VALUE}"
+          try {
+            echo "Selected value: ${userInput.parameters.SELECTED_VALUE}"
+          } catch (Exception e) {
+            echo "Error accessing SELECTED_VALUE field: ${e.message}"
+          }
         }
       }
     }
   }
-  
-  // Add additional stages or actions based on the selected value
 }
