@@ -1,66 +1,55 @@
-pipeline
-{
-agent any
-stages
-{
-stage('Generate payload')
-{
-steps
-{
-  script {
-        def value1 = '/Custom/DemoJenkins1'
+pipeline {
+  agent any
+
+  stages {
+    stage('Generate payload') {
+      steps {
+        script {
+          def value1 = '/Custom/DemoJenkins1'
           def value2 = '/Custom/Interns-23/DemoJenkins2'
           def value3 = '/Custom/Raju/DemoJenkins3'
 
           def choices = "${value1}\n${value2}\n${value3}"
 
+          env.USERNAME = input message: 'Please enter the username',
+            parameters: [string(defaultValue: 'lisa.jones',
+            description: '',
+            name: 'Username')]
           
-			env.USERNAME = input message: 'Please enter the username',
-                             parameters: [string(defaultValue: 'lisa.jones',
-                                          description: '',
-                                          name: 'Username')]
           env.PASSWORD = input message: 'Please enter the password',
-                             parameters: [password(defaultValue: 'sPP5j^7^',
-                                          description: '',
-                                          name: 'Password')]
- 	      env.REPORTNAME = input message: 'Please enter the report to be migrated',
-                             parameters: [string(defaultValue: 'SampleDM.xdmz',
-                                          description: '',
-                                          name: 'Reportname')]
-			def userInput = input(
-				id: 'userInput',
-				message: 'Select a value',
-				parameters: [
-						choice(choices: choices, description: 'Select a value', name: 'SELECTED_VALUE')
-				])
-				
-			bat(returnStdout: true, script: " java EncodeToBase64  ${env.REPORTNAME} Payload.xml ${userInput} ${env.USERNAME} \"${env.PASSWORD}\" ")
-   
-
+            parameters: [password(defaultValue: 'sPP5j^7^',
+            description: '',
+            name: 'Password')]
+          
+          env.REPORTNAME = input message: 'Please enter the report to be migrated',
+            parameters: [string(defaultValue: 'SampleDM.xdmz',
+            description: '',
+            name: 'Reportname')]
+          
+          def userInput = input(
+            id: 'userInput',
+            message: 'Select a value',
+            parameters: [
+              choice(choices: choices, description: 'Select a value', name: 'SELECTED_VALUE')
+            ])
+            
+          bat(returnStdout: true, script: "java EncodeToBase64 ${env.REPORTNAME} Payload.xml ${userInput} ${env.USERNAME} \"${env.PASSWORD}\"")
+        }
+      }
+    }
     
+    stage('Move BI object to catalog server') {
+      steps {
+        script {
+          status_code = bat(returnStdout: true, script: "curl --output output.gzip -w \"%%{http_code}\" --silent --header \"Content-Type:application/xml\" -d @Payload.xml https://fa-erzp-dev12-saasfademo1.ds-fa.oraclepdemos.com:443/xmlpserver/services/v2/CatalogService").trim().split("\n")[1]
+          
+          echo "HTTP response status code: ${status_code}"
+    
+          if (status_code != "200") {
+            error('URL status different from 200. Exiting script. Please refer to output.gzip')
+          }
+        }
+      }
+    }
+  }
 }
-}
-stage('Move BI object to cataloag server') 
-{
-steps
-{
-script{
-
-     
-
-      status_code = bat(returnStdout: true, script: "curl --output output.gzip -w \"%%{http_code}\" --silent --header \"Content-Type:application/xml\" -d @Payload.xml https://fa-erzp-dev12-saasfademo1.ds-fa.oraclepdemos.com:443/xmlpserver/services/v2/CatalogService").trim().split("\n")[1]
-                       
-      echo "HTTP response status code: ${status_code}"
-
-      if (status_code != "200") {
-          error('URL status different of 200. Exiting script.Plese refer output.gzip')
-      } 
-}
-
-
-}
-}
-}
-}
-}
-
