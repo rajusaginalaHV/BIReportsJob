@@ -16,7 +16,7 @@ pipeline {
 				message: 'Select a value',
 				parameters: [
 						choice(choices: choices, description: 'Select a value', name: 'SELECTED_VALUE')
-				])
+				]))
 
           try {
             echo "Selected value: ${userInput}"
