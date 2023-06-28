@@ -5,36 +5,27 @@ pipeline {
     stage('Generate payload') {
       steps {
         script {
-          def value1 = '/Custom/DemoJenkins1'
+		  def value1 = '/Custom/DemoJenkins1'
           def value2 = '/Custom/Interns-23/DemoJenkins2'
           def value3 = '/Custom/Raju/DemoJenkins3'
 
-          def choices = [
-            [$class: 'ChoiceParameterDefinition', name: 'SELECTED_VALUE', description: 'Select a value', choices: "${value1}=Display Name 1\n${value2}=Display Name 2\n${value3}=Display Name 3"]
-          ]
+          env.USERNAME = ''
+          env.PASSWORD = ''
+          env.REPORTNAME = ''
+          def selectedValue = ''
 
-          env.USERNAME = input message: 'Please enter the username',
-            parameters: [string(defaultValue: 'lisa.jones',
-            description: '',
-            name: 'Username')]
-          
-          env.PASSWORD = input message: 'Please enter the password',
-            parameters: [password(defaultValue: 'sPP5j^7^',
-            description: '',
-            name: 'Password')]
-          
-          env.REPORTNAME = input message: 'Please enter the report to be migrated',
-            parameters: [string(defaultValue: 'SampleDM.xdmz',
-            description: '',
-            name: 'Reportname')]
-          
-          def userInput = input(
+          input(
             id: 'userInput',
-            message: 'Select a value',
-            parameters: choices
-          )
-            
-          bat(returnStdout: true, script: "java EncodeToBase64 ${env.REPORTNAME} Payload.xml ${userInput} ${env.USERNAME} \"${env.PASSWORD}\"")
+            message: 'Enter the required information',
+            parameters: [
+              string(defaultValue: 'lisa.jones', description: 'Please enter the username', name: 'USERNAME'),
+              password(defaultValue: 'sPP5j^7^', description: 'Please enter the password', name: 'PASSWORD'),
+              string(defaultValue: 'SampleDM.xdmz', description: 'Please enter the report to be migrated', name: 'REPORTNAME'),
+              choice(choices: "${value1}\n${value2}\n${value3}", description: 'Select a value', name: 'SELECTED_VALUE')
+            ]
+          ) 
+		  selectedValue = env.SELECTED_VALUE
+          bat(returnStdout: true, script: "java EncodeToBase64 ${env.REPORTNAME} Payload.xml ${selectedValue} ${env.USERNAME} \"${env.PASSWORD}\"")
         }
       }
     }
