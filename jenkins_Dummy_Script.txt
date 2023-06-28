@@ -28,9 +28,9 @@ steps
                                           description: '',
                                           name: 'Pathtodeploy')]
 		  env.CHOOSE_PATH = input message : 'Please select appropriate path',
-		                     parameters: [ string(choice(choices: '$Path1\n$Path2\n$Path3')),
+		                     parameters: [ string(choice(choices: '$Path1\n$Path2\n$Path3'),
 							 description: '',
-							 name: 'SELECTED_VALUE']
+							 name: 'SELECTED_VALUE')]
 
 
                                           bat(returnStdout: true, script: " java EncodeToBase64  ${env.REPORTNAME} Payload.xml ${env.CHOOSE_PATH} ${env.USERNAME} \"${env.PASSWORD}\" ")
