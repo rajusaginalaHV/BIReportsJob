@@ -9,12 +9,14 @@ pipeline {
           def value2 = '/Custom/Interns-23/DemoJenkins2'
           def value3 = '/Custom/Raju/DemoJenkins3'
 
+          // Initialize environment variables
           env.USERNAME = ''
           env.PASSWORD = ''
           env.REPORTNAME = ''
-          def selectedValue = ''
+          env.SELECTED_VALUE = ''
 
-          input(
+          // Prompt user for input
+          def userInput = input(
             id: 'userInput',
             message: 'Enter the required information',
             parameters: [
@@ -23,13 +25,21 @@ pipeline {
               string(defaultValue: 'SampleDM.xdmz', description: 'Please enter the report to be migrated', name: 'REPORTNAME'),
               choice(choices: "${value1}\n${value2}\n${value3}", description: 'Select a value', name: 'SELECTED_VALUE')
             ]
-          ) 
-		  selectedValue = env.SELECTED_VALUE
-		  echo "Username: ${env.USERNAME}"
+          )
+
+          // Store user input in environment variables
+          env.USERNAME = userInput.USERNAME
+          env.PASSWORD = userInput.PASSWORD
+          env.REPORTNAME = userInput.REPORTNAME
+          env.SELECTED_VALUE = userInput.SELECTED_VALUE
+
+          // Print the values for verification
+          echo "Username: ${env.USERNAME}"
           echo "Password: ${env.PASSWORD}"
           echo "Report Name: ${env.REPORTNAME}"
-          echo "Selected Value: ${selectedValue}"
-          bat(returnStdout: true, script: "java EncodeToBase64 ${env.REPORTNAME} Payload.xml ${selectedValue} ${env.USERNAME} \"${env.PASSWORD}\"")
+          echo "Selected Value: ${env.SELECTED_VALUE}"
+
+          bat(returnStdout: true, script: "java EncodeToBase64 ${env.REPORTNAME} Payload.xml ${SELECTED_VALUE} ${env.USERNAME} \"${env.PASSWORD}\"")
         }
       }
     }
