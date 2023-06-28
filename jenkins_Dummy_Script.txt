@@ -21,10 +21,10 @@ pipeline {
             id: 'userInput',
             message: 'Enter the required information',
             parameters: [
-              string(defaultValue: 'lisa.jones', description: '', name: 'Please enter the username'),
-              password(defaultValue: 'sPP5j^7^', description: '', name: 'Please enter the password'),
-              string(defaultValue: 'SampleDM.xdmz', description: '', name: 'Please enter the report to be migrated'),
-              choice(choices: choices, description: '', name: 'Please enter the report path')
+              string(defaultValue: 'lisa.jones', description: 'Please enter the username', name: 'USERNAME'),
+              password(defaultValue: 'sPP5j^7^', description: 'Please enter the password', name: 'PASSWORD'),
+              string(defaultValue: 'SampleDM.xdmz', description: 'Please enter the report name', name: 'REPORTNAME'),
+              choice(choices: choices, description: 'Please enter the report path', name: 'SELECTED_VALUE')
             ]
           )
 
