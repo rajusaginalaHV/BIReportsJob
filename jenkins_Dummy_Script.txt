@@ -9,7 +9,7 @@ pipeline {
           def value2 = '/Custom/Interns-23/DemoJenkins2'
           def value3 = '/Custom/Raju/DemoJenkins3'
 
-          def choices = "${value1}\n${value2}\n${value3}"
+          def choices = "${value1}=Path1\n${value2}=Path2\n${value3}=Path3"
 
           env.USERNAME = input message: 'Please enter the username',
             parameters: [string(defaultValue: 'lisa.jones',
