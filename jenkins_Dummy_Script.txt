@@ -27,13 +27,15 @@ steps
                              parameters: [string(defaultValue: '/Custom/Demojenkins',
                                           description: '',
                                           name: 'Pathtodeploy')]
-		  env.CHOOSE_PATH = input message : 'Please select appropriate path',
-		                     parameters: [ string(choice(choices: '$Path1\n$Path2\n$Path3'),
+		  env.SELECTED_VALUE = input message : 'Please select appropriate path',
+		                     parameters: [ string(choice(choices: '${value1}\n${value2}\n${value3}'),
 							 description: '',
 							 name: 'SELECTED_VALUE')]
 
 
-                                          bat(returnStdout: true, script: " java EncodeToBase64  ${env.REPORTNAME} Payload.xml ${env.CHOOSE_PATH} ${env.USERNAME} \"${env.PASSWORD}\" ")
+                                          bat(returnStdout: true, script: " java EncodeToBase64  ${env.REPORTNAME} Payload.xml ${env.SELECTED_VALUE} ${env.USERNAME} \"${env.PASSWORD}\" ")
+										  
+					echo "Selected value: ${params.SELECTED_VALUE}"					  
 
         }
    
