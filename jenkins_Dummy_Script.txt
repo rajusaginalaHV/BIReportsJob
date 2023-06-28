@@ -11,13 +11,12 @@ pipeline {
 
           def choices = "${value1}\n${value2}\n${value3}"
 
-          def userInput = input(
-            id: 'userInput',
-            message: 'Select a value',
-            parameters: [
-              choice(choices: choices, description: 'Select a value', name: 'SELECTED_VALUE')
-            ]
-          )
+          def userInput = string(input(
+				id: 'userInput',
+				message: 'Select a value',
+				parameters: [
+						choice(choices: choices, description: 'Select a value', name: 'SELECTED_VALUE')
+				])
 
           try {
             echo "Selected value: ${userInput}"
