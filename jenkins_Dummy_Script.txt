@@ -20,9 +20,9 @@ pipeline {
           )
 
           try {
-            echo "Selected value: ${userInput.SELECTED_VALUE}"
+            echo "Selected value: ${userInput}"
           } catch (Exception e) {
-            echo "Error accessing SELECTED_VALUE field: ${e.message}"
+            echo "Error accessing selected value: ${e.message}"
           }
         }
       }
