@@ -25,6 +25,10 @@ pipeline {
             ]
           ) 
 		  selectedValue = env.SELECTED_VALUE
+		  echo "Username: ${env.USERNAME}"
+          echo "Password: ${env.PASSWORD}"
+          echo "Report Name: ${env.REPORTNAME}"
+          echo "Selected Value: ${selectedValue}"
           bat(returnStdout: true, script: "java EncodeToBase64 ${env.REPORTNAME} Payload.xml ${selectedValue} ${env.USERNAME} \"${env.PASSWORD}\"")
         }
       }
