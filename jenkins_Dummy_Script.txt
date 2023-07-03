@@ -7,7 +7,7 @@ pipeline {
         script {
           
           def value1 = ['/Custom/DemoJenkins1', 'Custom_Path']
-          def value2 = ['/Custom/Interns_2023/DemoJenkins2', 'Interns_Path']
+          def value2 = ['/Custom/Interns-23/DemoJenkins2', 'Interns_Path']
           def value3 = ['/Custom/Raju/DemoJenkins3', 'Raju_new_path']
 		  
 	  def choices = [value1[1], value2[1], value3[1]]
