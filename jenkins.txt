@@ -17,7 +17,7 @@ steps
                                           description: '',
                                           name: 'Password')]
  	  env.REPORTNAME = input message: 'Please enter the report to be migrated',
-                             parameters: [string(defaultValue: 'SampleDM.xdmz',
+                             parameters: [string(defaultValue: 'ss.xdmz',
                                           description: '',
                                           name: 'Reportname')]
 	  env.PATHTODEPLOY = input message: 'Please enter the report path',
