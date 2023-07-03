@@ -5,11 +5,12 @@ pipeline {
     stage('Generate payload') {
       steps {
         script {
-		  def value1 = ['/Custom/DemoJenkins1', 'Custom_Path']
+          
+          def value1 = ['/Custom/DemoJenkins1', 'Custom_Path']
           def value2 = ['/Custom/Interns_2023/DemoJenkins2', 'Interns_Path']
           def value3 = ['/Custom/Raju/DemoJenkins3', 'Raju_new_path']
 		  
-		  def choices = [value1[1], value2[1], value3[1]]
+	  def choices = [value1[1], value2[1], value3[1]]
 
           // Initialize environment variables
           env.USERNAME = ''
@@ -46,7 +47,7 @@ pipeline {
     stage('Move BI object to catalog server') {
       steps {
         script {
-          status_code = bat(returnStdout: true, script: "curl --output output.gzip -w \"%%{http_code}\" --silent --header \"Content-Type:application/xml\" -d @Payload.xml https://fa-etaj-saasfademo1.ds-fa.oraclepdemos.com:443/xmlpserver/services/v2/CatalogService").trim().split("\n")[1]
+          status_code = bat(returnStdout: true, script: "curl --output output.gzip -w \"%%{http_code}\" --silent --header \"Content-Type:application/xml\" -d @Payload.xml https://fa-erzp-dev12-saasfademo1.ds-fa.oraclepdemos.com:443/xmlpserver/services/v2/CatalogService").trim().split("\n")[1]
           
           echo "HTTP response status code: ${status_code}"
     
