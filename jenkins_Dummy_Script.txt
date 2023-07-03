@@ -13,15 +13,15 @@ steps
                                           description: '',
                                           name: 'Username')]
           env.PASSWORD = input message: 'Please enter the password',
-                             parameters: [password(defaultValue: '',
+                             parameters: [string(defaultValue: '',
                                           description: '',
                                           name: 'Password')]
  	  env.REPORTNAME = input message: 'Please enter the report to be migrated',
-                             parameters: [password(defaultValue: '',
+                             parameters: [string(defaultValue: '',
                                           description: '',
                                           name: 'Reportname')]
 	  env.PATHTODEPLOY = input message: 'Please enter the report path', 
-                             parameters: [password(defaultValue: '',
+                             parameters: [string(defaultValue: '',
                                           description: '',
                                           name: 'Pathtodeploy')]
 
