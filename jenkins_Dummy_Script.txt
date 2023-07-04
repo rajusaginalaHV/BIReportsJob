@@ -10,10 +10,10 @@ pipeline {
 	  echo "Username: ${USERNAME}"
           echo "Password: ${PASSWORD}"
           echo "Report Name: ${REPORTNAME}"
-          echo "Selected Value: ${PATHTODEPLOY}"
+          echo "Selected Value: ${REPORTPATH}"
 
           bat """
-		    java EncodeToBase64 ${REPORTNAME} Payload.xml ${PATHTODEPLOY} ${USERNAME} ${PASSWORD}
+		    java EncodeToBase64 ${REPORTNAME} Payload.xml ${REPORTPATH} ${USERNAME} ${PASSWORD}
 	      """
         }
       }
