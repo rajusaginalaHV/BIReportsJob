@@ -1,3 +1,4 @@
+// script for paramterized job/build
 pipeline {
   agent any
 
@@ -5,52 +6,14 @@ pipeline {
     stage('Generate payload') {
       steps {
         script {
-          
-          def value1 = ['/Custom/DemoJenkins1', 'Custom_Path']
-          def value2 = ['/Custom/Interns_2023/DemoJenkins2', 'Interns_Path']
-          def value3 = ['/Custom/Raju/DemoJenkins3', 'Raju_new_path']
-		  
-	  def choices = [value1[1], value2[1], value3[1]]
-
-          // Initialize environment variables
-          env.USERNAME = ''
-          env.PASSWORD = ''
-          env.REPORTNAME = ''
-          
-          def selectedValue = ''
-
-          def userInput = input(
-            id: 'userInput',
-            message: 'Enter the required information',
-            parameters: [
-              string(defaultValue: 'lisa.jones', description: 'Please enter the username', name: 'USERNAME'),
-              password(defaultValue: 'oUf3F%4%', description: 'Please enter the password', name: 'PASSWORD'),
-              string(defaultValue: 'testDM.xdmz', description: 'Please enter the report name', name: 'REPORTNAME'),
-            //   choice(choices: choices, description: 'Please enter the report path', name: 'SELECTED_VALUE')
-            ]
-          )
-          env.PATHTODEPLOY = input message: 'Please enter the report path',
-                             parameters: [string(defaultValue: '/Custom/Shomit',
-                                          description: '',
-                                          name: 'Pathtodeploy')]
-
-        //   selectedValue = [value1, value2, value3].find { value ->
-        //     value[1] == userInput.SELECTED_VALUE
-        //   }[0]
-		  
-
-          // Store user input in environment variables
-          env.USERNAME = userInput.USERNAME
-          env.PASSWORD = userInput.PASSWORD
-          env.REPORTNAME = userInput.REPORTNAME
 	  
-		  echo "Username: ${env.USERNAME}"
-          echo "Password: ${env.PASSWORD}"
-          echo "Report Name: ${env.REPORTNAME}"
-          echo "Selected Value: ${env.PATHTODEPLOY}"
+	  echo "Username: ${USERNAME}"
+          echo "Password: ${PASSWORD}"
+          echo "Report Name: ${REPORTNAME}"
+          echo "Selected Value: ${PATHTODEPLOY}"
 
           bat """
-		    java EncodeToBase64 ${env.REPORTNAME} Payload.xml ${env.PATHTODEPLOY} ${env.USERNAME} ${env.PASSWORD}
+		    java EncodeToBase64 ${REPORTNAME} Payload.xml ${PATHTODEPLOY} ${USERNAME} ${PASSWORD}
 	      """
         }
       }
