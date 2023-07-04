@@ -12,9 +12,7 @@ pipeline {
           echo "Report Name: ${REPORTNAME}"
           echo "Selected Value: ${REPORTPATH}"
 
-          bat """
-		    java EncodeToBase64 ${REPORTNAME} Payload.xml ${REPORTPATH} ${USERNAME} ${PASSWORD}
-	      """
+          bat "    java EncodeToBase64 ${REPORTNAME} Payload.xml ${REPORTPATH} ${USERNAME} ${PASSWORD} "
         }
       }
     }
